@@ -1,0 +1,48 @@
+# train_file: ['handa/data_complete_tra_train.json']
+
+#train_file: ['handa/data_filter_tra_train.json']
+#test_file: ['handa/cases_com_tra_mid.json']
+# test_file: ['handa/log_case_test_52_data.json']
+
+bert_config: './configs/config_roberta.json'
+# data_prefix: '/data/private/songchenyang/hanzi_filter'
+# data_prefix: '/data/private/chenyingfa/rt7381'
+data_prefix: 'D:/donny/code/research/oracle/data/rt7381'
+
+model: 'transcribe'
+output_path: 'output/vit_enc2_dec2_mask0.5_noise0.5_rgb_bs4_lr1e-3'
+# output_path: 'output/vit_temp_0'
+
+image_res: 128
+batch_size: 4
+embed_dim: 256
+num_att_heads: 8
+img_mode: 'L'
+dataset_mode: 'all_mask'
+
+img_random_transform: false
+img_mask_ratio: 0.2
+img_noise_ratio: 0.2
+img_do_rotate: true
+pad_color: 0
+specific_test: true
+max_length: 8
+
+visual_encoder: 'vit'
+encoder_layer: 2
+decoder_layer: 2
+image_reconstruct_factor: 10.0
+# image_classification_factor: [1.0, 1.0]
+image_classification_factor: [0.0, 0.0]
+
+optimizer: {opt: adamW, lr: 1e-3, weight_decay: 0.02}
+schedular: {
+  sched: cosine, 
+  lr: 1e-3, 
+  epochs: 8,
+  min_lr: 1e-4, 
+  decay_rate: 1, 
+  warmup_lr: 1e-3, 
+  warmup_epochs: 2, 
+  cooldown_epochs: 0,
+}
